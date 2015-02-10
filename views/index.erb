@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jerry's Movie Stats</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+      h3 {text-align: center}
+      body {overflow-x: hidden;}
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Charts -->
+    <script src="//www.google.com/jsapi"></script>
+    <script src="/js/chartkick.js"></script>
+
+    <!-- Tracking -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-47315066-3', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body>
+    <h1 class="text-center">Movie Stats</h1>
+
+    <div class="row js-isotope" data-isotope-options='{ "columnWidth": 100, "itemSelector": ".item" }' style="max-height:125px;overflow:hidden">
+      <% @images.each do |i| %>
+        <div class="item"><img src="<%= i %>" width="100px"></div>
+      <% end %>
+    </div>
+
+    <div class="row" style="background: url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/cartographer.png) 0 0 repeat fixed;border-top: 1px solid #cecece;border-bottom: 1px solid #cecece">
+      <div class="col-md-4 col-md-offset-4" style="color:#fff;padding: 50px 0 50px 0">
+        <h3>Minutes</h3>
+        <h1 style="text-align:center;font-size:100px;"><%= format_number(@minutes) %></h1>
+        <p class="small" style="text-align:center"><%= @minutes/60 %> Hours</p>
+        <p class="small" style="text-align:center"><%= sprintf("%.2f",@minutes/60/24) %> Days</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4" style="text-align:center;">
+        <h3>Next Movie</h3>
+        <img src="<%= @votes["Poster"] %>" height="250px" style="padding-top: 50px;padding-bottom:20px">
+        <br>
+        <button class="btn btn-sm btn-primary"><i class="fa fa-thumbs-up"></i> <%= @votes["vote_count"] %></button> 
+      </div>
+      <div class="col-md-4">
+        <h3>Ratings</h3>
+        <%= pie_chart(@ratings) %>
+      </div>
+      <div class="col-md-4">
+        <h3>Years</h3>
+        <%= pie_chart(@years) %>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Genres</h3>
+        <%= column_chart(@genres) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>IMDB Scores</h3>
+        <%= column_chart(@scores) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Top 10 Directors</h3>
+        <%= bar_chart(@directors) %>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- Isotope -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.1.0/isotope.pkgd.min.js"></script>
+  </body>
+</html>
